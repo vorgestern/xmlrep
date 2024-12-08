@@ -1,4 +1,16 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup Label="ProjectConfigurations">
+        <ProjectConfiguration Include="Release|Win32">
+            <Configuration>Release</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    </ItemGroup>
+    <PropertyGroup Label="Globals">
+        <ProjectGuid>{C4C00E76-B078-50C3-1980-291F0557EBB3}</ProjectGuid>
+        <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+        <Keyword>Win32Proj</Keyword>
+        <RootNamespace>LuaToXML54</RootNamespace>
+    </PropertyGroup>
     <Import Project="$(VCTargetsPath)/Microsoft.Cpp.Default.props"/>
     <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -8,6 +20,9 @@
     </PropertyGroup>
     <Import Project="$(VCTargetsPath)/Microsoft.Cpp.props"/>
     <ImportGroup Label="ExtensionSettings"/>
+    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <Import Project="$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props" Label="LocalAppDataPlatform" Condition="exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')"/>
+    </ImportGroup>
     <PropertyGroup Label="UserMacros"/>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <LinkIncremental>false</LinkIncremental>
@@ -17,6 +32,25 @@
         <TargetName>LuaToXML54</TargetName>
         <TargetExt>.dll</TargetExt>
     </PropertyGroup>
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <ClCompile>
+            <PrecompiledHeader>NotUsing</PrecompiledHeader>
+            <WarningLevel>Level3</WarningLevel>
+            <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ZLIB_CONST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <AdditionalIncludeDirectories>../libs/include/zlib-1.2.11;../libs/inflate;$(ROBINSON)/lua/5.4/include;obj/LuaToXML54;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            <Optimization>Disabled</Optimization>
+            <LanguageStandard>stdcpp20</LanguageStandard>
+            <ExternalWarningLevel>Level3</ExternalWarningLevel>
+        </ClCompile>
+        <Link>
+            <SubSystem>Windows</SubSystem>
+            <AdditionalDependencies>lua54-shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalLibraryDirectories>$(ROBINSON)/lua/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <ImportLibrary>obj/LuaToXML54/LuaToXML54.lib</ImportLibrary>
+            <ModuleDefinitionFile>../lua/DLLModule/LuaToXML/LuaToXML.def</ModuleDefinitionFile>
+            <ProgramDatabaseFile>obj/LuaToXML54/.pdb</ProgramDatabaseFile>
+        </Link>
+    </ItemDefinitionGroup>
     <ItemGroup>
         <ClCompile Include="../lua/DLLModule/LuaToXML/DllMain.cpp"/>
         <ClCompile Include="../lua/DLLModule/LuaToXML/Modul.cpp"/>
