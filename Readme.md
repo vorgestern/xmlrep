@@ -7,6 +7,7 @@ Export structured data from Lua in xml-form
 ## Status
 Works as intended
 ### Missing features
+- Creating attributes directly from generic Lua-tables (alphabetic order)
 - Escaping Text properly
 - xml entities
 - xml namespace
@@ -17,7 +18,8 @@ Works as intended
 
     local X=require "xmlrep"
     local N,A,T=X.N,X.A,X.T  -- Abbreviate Node, Attribute, Textnode
-                             -- (Attributes and Textnodes may not be necessary, since they can be created implicitly.)
+                             -- (Attributes and Textnodes may not be necessary,
+                             -- since they can be created implicitly.)
 
     local Readme=N "Readme" {"version=0.1"} {
         N "Level1" {"index=0", "version=0.1"} {
@@ -31,9 +33,9 @@ Works as intended
     print(Readme) -- Print xml-representation
 
 ### More complex examples
-
-    lua examples/Readme.lua                          outputs an xml-text with roughly the same content as this Readme.
-    lua examples/ExampleVCXProj.lua                  outputs the xml-text of a project file for Visual Studio (.vcxproj).
+                                      outputs xml-text ..
+    lua examples/Readme.lua           .. with roughly the same content as this Readme.
+    lua examples/ExampleVCXProj.lua   .. of a project file for Visual Studio (.vcxproj).
 
 ## How to build
 There is no need to build xmlrep,
