@@ -1,0 +1,2 @@
+
+alias ex="lua examples/VCXProj.lua > examples/VCXProj.vcxproj && lua examples/Readme.lua > examples/Readme.xml"

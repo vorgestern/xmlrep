@@ -1,0 +1,62 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(VCTargetsPath)/Microsoft.Cpp.Default.props"/>
+    <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <ConfigurationType>DynamicLibrary</ConfigurationType>
+        <UseDebugLibraries>false</UseDebugLibraries>
+        <CharacterSet>Unicode</CharacterSet>
+        <PlatformToolset>v143</PlatformToolset>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)/Microsoft.Cpp.props"/>
+    <ImportGroup Label="ExtensionSettings"/>
+    <PropertyGroup Label="UserMacros"/>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <LinkIncremental>false</LinkIncremental>
+        <IgnoreImportLibrary>true</IgnoreImportLibrary>
+        <OutDir>$(ROBINSON)/lua/modules/</OutDir>
+        <IntDir>obj/LuaToXML54/</IntDir>
+        <TargetName>LuaToXML54</TargetName>
+        <TargetExt>.dll</TargetExt>
+    </PropertyGroup>
+    <ItemGroup>
+        <ClCompile Include="../lua/DLLModule/LuaToXML/DllMain.cpp"/>
+        <ClCompile Include="../lua/DLLModule/LuaToXML/Modul.cpp"/>
+        <ClCompile Include="obj/LuaToXML54/Attribute.cpp"/>
+        <ClCompile Include="obj/LuaToXML54/Node.cpp"/>
+        <ClCompile Include="obj/LuaToXML54/TextNode.cpp"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="../lua/DLLModule/LuaToXML/LuaToXML.def"/>
+        <None Include="../lua/DLLModule/LuaToXML/init.lua"/>
+        <None Include="../lua/DLLModule/LuaToXML/xmldemo.lua"/>
+    </ItemGroup>
+    <ItemGroup>
+        <CustomBuild Include="../lua/DLLModule/LuaToXML/Attribute.lua">
+            <FileType>Document</FileType>
+            <Command>lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)</Command>
+            <Outputs>obj/LuaToXML54/Attribute.cpp</Outputs>
+            <Message>%(Filename)%(Extension) to $(IntDir)%(Filename).cpp</Message>
+        </CustomBuild>
+        <CustomBuild Include="../lua/DLLModule/LuaToXML/Node.lua">
+            <FileType>Document</FileType>
+            <Command>lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)</Command>
+            <Outputs>obj/LuaToXML54/Node.cpp</Outputs>
+            <Message>%(Filename)%(Extension) to $(IntDir)%(Filename).cpp</Message>
+        </CustomBuild>
+        <CustomBuild Include="../lua/DLLModule/LuaToXML/TextNode.lua">
+            <FileType>Document</FileType>
+            <Command>lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)</Command>
+            <Outputs>obj/LuaToXML54/TextNode.cpp</Outputs>
+            <Message>%(Filename)%(Extension) to $(IntDir)%(Filename).cpp</Message>
+        </CustomBuild>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="zlibstat32.vcxproj">
+            <Project>{57C7ADBA-437F-EF07-AC86-C863985D8AF8}</Project>
+        </ProjectReference>
+        <ProjectReference Include="inflate32.vcxproj">
+            <Project>{CD4E2EEC-39B9-E262-82F7-9308EEA0C0B7}</Project>
+        </ProjectReference>
+    </ItemGroup>
+    <Import Project="$(VCTargetsPath)/Microsoft.Cpp.targets"/>
+    <ImportGroup Label="ExtensionTargets"/>
+</Project>

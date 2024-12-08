@@ -1,0 +1,31 @@
+
+=================
+<Readme version="0.1">
+    <Chapter title="Purpose">Export structured data from Lua in xml-form</Chapter>
+    <Chapter title="Info">
+        <Name>xmlrep</Name>
+        <Home>https://github.com/vorgestern/xmlrep</Home>
+        <Version>0.1</Version>
+    </Chapter>
+    <Chapter title="Status">Works as intended
+<Subchapter title="Missing Features">
+            <List>
+                <Item>Escaping Text properly</Item>
+                <Item>xml entities</Item>
+                <Item>xml namespaces</Item>
+            </List>
+        </Subchapter>
+        <Subchapter title="Defects">
+            <List>
+                <Item>Indentation after textnodes that are terminated with a newline</Item>
+            </List>
+        </Subchapter>
+    </Chapter>
+    <Chapter title="How to use">See demo scripts</Chapter>
+    <Chapter title="How to build">There is no need to build xmlrep,
+since it can be used in source-form.</Chapter>
+    <Chapter title="How to install">Copy xmlrep.lua to a directory on your Luapath.
+Consult LUA_PATH_5_4 or LUA_PATH environment variables
+or https://www.lua.org/manual/5.4/manual.html#pdf-package.path</Chapter>
+</Readme>
+=================
