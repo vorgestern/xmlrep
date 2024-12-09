@@ -4,6 +4,14 @@
 ## Purpose
 Export structured data from Lua in xml-form
 
+Xmlrep makes it easy to create 'domain-specific' utilities
+to establish default-attributes or parameterised node-structures
+in the Lua representation of a data structure.
+
+A Lua file is typically easier to keep under version control than
+an application-specific xml-file, because applications usually include
+extraneous information (e.g. 'last-modified' timestamps).
+
 ## Status
 Works as intended
 ### Missing features
