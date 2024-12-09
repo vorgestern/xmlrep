@@ -1,2 +1,4 @@
 
-alias ex="lua examples/VCXProj.lua > examples/VCXProj.vcxproj && lua examples/Readme.lua > examples/Readme.xml"
+alias ex="lua examples/VCXProj.lua > examples/VCXProj.vcxproj\
+    && lua examples/Readme.lua > examples/Readme.xml\
+    && lua examples/Mindmap.lua"

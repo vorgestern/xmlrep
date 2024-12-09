@@ -35,7 +35,8 @@ Works as intended
 ### More complex examples
                                       outputs xml-text ..
     lua examples/Readme.lua           .. with roughly the same content as this Readme.
-    lua examples/ExampleVCXProj.lua   .. of a project file for Visual Studio (.vcxproj).
+    lua examples/VCXProj.lua          .. of a project file for Visual Studio (.vcxproj).
+    lua examples/Mindmap.lua          .. of a mindmap for Freeplane (https://github.com/freeplane/freeplane)
 
 ## How to build
 There is no need to build xmlrep,
