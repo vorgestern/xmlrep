@@ -33,7 +33,8 @@ N,A,T=X.N,X.A,X.T
 Nt=function(n) return function(t) return N(n){}(t) end end
 
 Project=N "Project" {
-    "DefaultTargets=Build", "xmlns=http://schemas.microsoft.com/developer/msbuild/2003"
+    "DefaultTargets=Build",
+    "xmlns=http://schemas.microsoft.com/developer/msbuild/2003"
 }
 
 PropertyGroup=function(L, C)

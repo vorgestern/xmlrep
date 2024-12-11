@@ -13,6 +13,8 @@ local custombuildrules={
     end
 }
 
+local R32="'$(Configuration)|$(Platform)'=='Release|Win32'"
+
 local K=Project {
     ItemGroup "ProjectConfigurations" {
         ProjectConfiguration "Release|Win32" {Nt "Configuration" "Release", Nt "Platform" "Win32"}
@@ -24,7 +26,7 @@ local K=Project {
         RootNamespace="LuaToXML54",
     },
     Import "$(VCTargetsPath)/Microsoft.Cpp.Default.props",
-    PropertyGroup ("Configuration", "'$(Configuration)|$(Platform)'=='Release|Win32'") {
+    PropertyGroup ("Configuration", R32) {
         ConfigurationType="DynamicLibrary",
         UseDebugLibraries="false",
         CharacterSet="Unicode",
@@ -32,11 +34,11 @@ local K=Project {
     },
     Import "$(VCTargetsPath)/Microsoft.Cpp.props",
     ImportGroup ("ExtensionSettings") {},
-    ImportGroup ("PropertySheets", "'$(Configuration)|$(Platform)'=='Release|Win32'") {
+    ImportGroup ("PropertySheets", R32) {
         Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "LocalAppDataPlatform", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')"),
     },
     PropertyGroup ("UserMacros") {},
-    PropertyGroup (nil, "'$(Configuration)|$(Platform)'=='Release|Win32'") {
+    PropertyGroup (nil, R32) {
         LinkIncremental="false",
         IgnoreImportLibrary="true",
         OutDir="$(ROBINSON)/lua/modules/",
@@ -44,7 +46,7 @@ local K=Project {
         TargetName="LuaToXML54",
         TargetExt=".dll",
     },
-    ItemDefinitionGroup "'$(Configuration)|$(Platform)'=='Release|Win32'" {
+    ItemDefinitionGroup (R32) {
         ItemDefinitions.Compiler {
             PrecompiledHeader="NotUsing",
             WarningLevel="Level3",
