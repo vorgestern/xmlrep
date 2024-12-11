@@ -50,16 +50,16 @@ local K=Project {
         ItemDefinitions.Compiler {
             PrecompiledHeader="NotUsing",
             WarningLevel="Level3",
-            PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;ZLIB_CONST;%(PreprocessorDefinitions)",
-            AdditionalIncludeDirectories="../libs/include/zlib-1.2.11;../libs/inflate;$(ROBINSON)/lua/5.4/include;obj/LuaToXML54;%(AdditionalIncludeDirectories)",
+            PreprocessorDefinitions=prepend_define {"_CRT_SECURE_NO_WARNINGS", "ZLIB_CONST"},
+            AdditionalIncludeDirectories=prepend_inc {"../libs/include/zlib-1.2.11", "../libs/inflate", "$(ROBINSON)/lua/5.4/include", "obj/LuaToXML54"},
             Optimization="Disabled",
             LanguageStandard="stdcpp20",
             ExternalWarningLevel="Level3"
         },
         ItemDefinitions.Linker {
             SubSystem="Windows",
-            AdditionalDependencies="lua54-shared.lib;%(AdditionalDependencies)",
-            AdditionalLibraryDirectories="$(ROBINSON)/lua/lib;%(AdditionalLibraryDirectories)",
+            AdditionalDependencies=prepend_depend {"lua54-shared.lib"},
+            AdditionalLibraryDirectories=prepend_libdirs {"$(ROBINSON)/lua/lib"},
             ImportLibrary="obj/LuaToXML54/LuaToXML54.lib",
             ModuleDefinitionFile="../lua/DLLModule/LuaToXML/LuaToXML.def",
             ProgramDatabaseFile="obj/LuaToXML54/.pdb",

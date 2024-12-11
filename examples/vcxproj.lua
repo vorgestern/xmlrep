@@ -127,3 +127,27 @@ ItemGroups={
     end,
     Custom=function(rule) return ItemGroup(rule) end,
 }
+
+prepend_define=function(defs)
+    if #defs>0 then
+        return table.concat(defs, ";")..";%(PreprocessorDefinitions)"
+    end
+end
+
+prepend_inc=function(dirs)
+    if #dirs>0 then
+        return table.concat(dirs, ";")..";%(AdditionalIncludeDirectories)"
+    end
+end
+
+prepend_depend=function(libs)
+    if #libs>0 then
+        return table.concat(libs, ";")..";%(AdditionalDependencies)"
+    end
+end
+
+prepend_libdirs=function(dirs)
+    if #dirs>0 then
+        return table.concat(dirs, ";")..";%(AdditionalLibraryDirectories)"
+    end
+end
