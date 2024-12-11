@@ -37,9 +37,11 @@ Nt=function(n) return function(t) return N(n){}(t) end end
                     return Node
                 end
 
-PropertyGroup=function(C, L)
-    local Node=N "PropertyGroup" {} {}
-    Node=Aopt(Node, {Condition=C, Label=L})
+PropertyGroup=function(L, C)
+    local attrs={}
+    if L then table.insert(attrs, A "Label" (L)) end
+    if C then table.insert(attrs, A "Condition" (C)) end
+    local Node=N "PropertyGroup" (attrs) {}
     return function(children) Node:appendchildren(children); return Node end
 end
 

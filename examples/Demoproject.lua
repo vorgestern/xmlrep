@@ -17,14 +17,14 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
     ItemGroup "ProjectConfigurations" {
         ProjectConfiguration "Release|Win32" {Nt "Configuration" "Release", Nt "Platform" "Win32"}
     },
-    PropertyGroup (nil, "Globals") {
+    PropertyGroup ("Globals") {
         Nt "ProjectGuid" "{C4C00E76-B078-50C3-1980-291F0557EBB3}",
         Nt "IgnoreWarnCompileDuplicatedFilename" "true",
         Nt "Keyword" "Win32Proj",
         Nt "RootNamespace" "LuaToXML54",
     },
     Import "$(VCTargetsPath)/Microsoft.Cpp.Default.props",
-    PropertyGroup ("'$(Configuration)|$(Platform)'=='Release|Win32'", "Configuration") {
+    PropertyGroup ("Configuration", "'$(Configuration)|$(Platform)'=='Release|Win32'") {
         Nt "ConfigurationType" "DynamicLibrary",
         Nt "UseDebugLibraries" "false",
         Nt "CharacterSet" "Unicode",
@@ -36,7 +36,7 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
         Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')", "LocalAppDataPlatform"),
     },
     N "PropertyGroup" {"Label=UserMacros"} {},
-    PropertyGroup ("'$(Configuration)|$(Platform)'=='Release|Win32'") {
+    PropertyGroup (nil, "'$(Configuration)|$(Platform)'=='Release|Win32'") {
         Nt "LinkIncremental" "false",
         Nt "IgnoreImportLibrary" "true",
         Nt "OutDir" "$(ROBINSON)/lua/modules/",
