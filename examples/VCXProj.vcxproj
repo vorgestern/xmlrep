@@ -91,14 +91,6 @@
             <Project>{CD4E2EEC-39B9-E262-82F7-9308EEA0C0B7}</Project>
         </ProjectReference>
     </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="zlibstat32.vcxproj">
-            <Project>{57C7ADBA-437F-EF07-AC86-C863985D8AF8}</Project>
-        </ProjectReference>
-        <ProjectReference Include="inflate32.vcxproj">
-            <Project>{CD4E2EEC-39B9-E262-82F7-9308EEA0C0B7}</Project>
-        </ProjectReference>
-    </ItemGroup>
     <Import Project="$(VCTargetsPath)/Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets"/>
 </Project>

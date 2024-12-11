@@ -13,7 +13,7 @@ local custombuildrules={
     end
 }
 
-local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com/developer/msbuild/2003"} {
+local K=Project {
     ItemGroup "ProjectConfigurations" {
         ProjectConfiguration "Release|Win32" {Nt "Configuration" "Release", Nt "Platform" "Win32"}
     },
