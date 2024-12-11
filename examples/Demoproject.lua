@@ -35,7 +35,7 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
     ImportGroup ("'$(Configuration)|$(Platform)'=='Release|Win32'", "PropertySheets") {
         Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')", "LocalAppDataPlatform"),
     },
-    N "PropertyGroup" {"Label=UserMacros"} {},
+    PropertyGroup ("UserMacros") {},
     PropertyGroup (nil, "'$(Configuration)|$(Platform)'=='Release|Win32'") {
         Nt "LinkIncremental" "false",
         Nt "IgnoreImportLibrary" "true",
