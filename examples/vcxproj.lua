@@ -53,9 +53,10 @@ ImportGroup=function(L, C)
     return function(children) Node:appendchildren(children); return Node end
 end
 
-ItemDefinitionGroup=function(C, L)
-    local Node=N "ItemDefinitionGroup" {} {}
-    Node=Aopt(Node, {Condition=C, Label=L})
+ItemDefinitionGroup=function(C)
+    local attrs={}
+    if C then table.insert(attrs, A "Condition" (C)) end
+    local Node=N "ItemDefinitionGroup" (attrs) {}
     return function(children) Node:appendchildren(children); return Node end
 end
 
