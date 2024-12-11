@@ -88,21 +88,6 @@ ItemDefinitions={
 
 -- =====================================================
 
-Items={
-    custombuild=function(filename)
-        return function(settings)
-            local K={}
-            for k,_ in pairs(settings) do table.insert(K, k) end
-            table.sort(K)
-            local S={}
-            for _,k in pairs(K) do table.insert(S, Nt(k)(settings[k])) end
-            return CustomBuild(filename)(S)
-        end
-    end,
-}
-
--- =====================================================
-
 local ItemGroup=function(itemfunction)
     return function(files)
         local F={}
