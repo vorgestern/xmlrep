@@ -3,6 +3,33 @@ local X=require "xmlrep"
 
 N,A,T=X.N,X.A,X.T
 
+--[[
+    <Project>
+        <ItemGroup Label="ProjectConfigurations">
+            <ProjectConfiguration Include="Release|Win32"> ....
+        <PropertyGroup Label="Globals">
+        <Import Project="$(VCTargetsPath)/Microsoft.Cpp.Default.props"/>
+        <PropertyGroup Label="Configuration" Condition="..."> ....
+        <Import Project="$(VCTargetsPath)/Microsoft.Cpp.props"/>
+        <ImportGroup Label="ExtensionSettings"/>
+        <ImportGroup Label="PropertySheets" Condition="..."> ....
+        <PropertyGroup Label="UserMacros"/>
+        <PropertyGroup Condition="..."> ....
+        <ItemDefinitionGroup Condition="..."> ....
+            <ClCompile>
+            <Link>
+        <ItemGroup>
+            <ClCompile Include="xxx.cpp"/> ....
+        <ItemGroup>
+            <None Include="xxx.def"/> ....
+        <ItemGroup>
+            <CustomBuild Include="xxx.lua"> ....
+        <ItemGroup>
+            <ProjectReference Include="xxx.vcxproj">
+        <Import Project="$(VCTargetsPath)/Microsoft.Cpp.targets"/>
+        <ImportGroup Label="ExtensionTargets"/>
+--]]
+
 Nt=function(n) return function(t) return N(n){}(t) end end
 
                 local Aopt=function(Node, As)
@@ -41,6 +68,8 @@ ItemGroup=function(L)
     return N "ItemGroup" (attrs)
 end
 
+-- =====================================================
+
 local ItemDefinition=function(itemname)
     return function(settings)
         local K={}
@@ -57,6 +86,8 @@ ItemDefinitions={
     Linker=ItemDefinition("Link")
 }
 
+-- =====================================================
+
 Items={
     custombuild=function(filename)
         return function(settings)
@@ -69,6 +100,8 @@ Items={
         end
     end,
 }
+
+-- =====================================================
 
 local ItemGroup=function(itemfunction)
     return function(files)
