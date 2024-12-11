@@ -32,11 +32,6 @@ N,A,T=X.N,X.A,X.T
 
 Nt=function(n) return function(t) return N(n){}(t) end end
 
-                local Aopt=function(Node, As)
-                    for a,v in pairs(As) do Node:appendattr(A(a)(v)) end
-                    return Node
-                end
-
 PropertyGroup=function(L, C)
     local attrs={}
     if L then table.insert(attrs, A "Label" (L)) end
@@ -60,7 +55,13 @@ ItemDefinitionGroup=function(C)
     return function(children) Node:appendchildren(children); return Node end
 end
 
-Import=function(x, C, L)            return Aopt(N "Import"          {A "Project" (x)} {}, {Condition=C, Label=L})   end
+Import=function(x, L, C)
+    local attrs={A "Project" (x)}
+    if L then table.insert(attrs, A "Label" (L)) end
+    if C then table.insert(attrs, A "Condition" (C)) end
+    return N "Import" (attrs) {}
+end
+
 ClCompile=function(x)               return N "ClCompile"            {A "Include" (x)} {}                            end
 None=function(x)                    return N "None"                 {A "Include" (x)} {}                            end
 CustomBuild=function(x)             return N "CustomBuild"          {A "Include" (x)}                               end

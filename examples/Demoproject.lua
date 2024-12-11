@@ -33,7 +33,7 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
     Import "$(VCTargetsPath)/Microsoft.Cpp.props",
     ImportGroup ("ExtensionSettings") {},
     ImportGroup ("PropertySheets", "'$(Configuration)|$(Platform)'=='Release|Win32'") {
-        Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')", "LocalAppDataPlatform"),
+        Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "LocalAppDataPlatform", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')"),
     },
     PropertyGroup ("UserMacros") {},
     PropertyGroup (nil, "'$(Configuration)|$(Platform)'=='Release|Win32'") {
