@@ -45,9 +45,11 @@ PropertyGroup=function(L, C)
     return function(children) Node:appendchildren(children); return Node end
 end
 
-ImportGroup=function(C, L)
-    local Node=N "ImportGroup" {} {}
-    Node=Aopt(Node, {Condition=C, Label=L})
+ImportGroup=function(L, C)
+    local attrs={}
+    if L then table.insert(attrs, A "Label" (L)) end
+    if C then table.insert(attrs, A "Condition" (C)) end
+    local Node=N "ImportGroup" (attrs) {}
     return function(children) Node:appendchildren(children); return Node end
 end
 

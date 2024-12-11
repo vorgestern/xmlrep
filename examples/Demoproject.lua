@@ -31,8 +31,8 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
         Nt "PlatformToolset" "v143",
     },
     Import "$(VCTargetsPath)/Microsoft.Cpp.props",
-    N "ImportGroup" {"Label=ExtensionSettings"} {},
-    ImportGroup ("'$(Configuration)|$(Platform)'=='Release|Win32'", "PropertySheets") {
+    ImportGroup ("ExtensionSettings") {},
+    ImportGroup ("PropertySheets", "'$(Configuration)|$(Platform)'=='Release|Win32'") {
         Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')", "LocalAppDataPlatform"),
     },
     PropertyGroup ("UserMacros") {},
@@ -85,7 +85,7 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
         ProjectReference "inflate32.vcxproj"  {Nt "Project" "{CD4E2EEC-39B9-E262-82F7-9308EEA0C0B7}"},
     },
     Import "$(VCTargetsPath)/Microsoft.Cpp.targets",
-    N "ImportGroup" {"Label=ExtensionTargets"} {},
+    ImportGroup ("ExtensionTargets") {},
 }
 
 print(K)
