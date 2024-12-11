@@ -1,7 +1,9 @@
 ﻿
 local X=require "xmlrep"
 
-N,A,T=X.N,X.A,X.T
+local N,A,T=X.N,X.A,X.T
+
+local Nt=function(n) return function(t) return N(n){}(t) end end
 
 --[[
     <Project>
@@ -30,54 +32,12 @@ N,A,T=X.N,X.A,X.T
         <ImportGroup Label="ExtensionTargets"/>
 --]]
 
-Nt=function(n) return function(t) return N(n){}(t) end end
-
-Project=N "Project" {
-    "DefaultTargets=Build",
-    "xmlns=http://schemas.microsoft.com/developer/msbuild/2003"
-}
-
-PropertyGroup=function(L, C)
-    local attrs={}
-    if L then table.insert(attrs, A "Label" (L)) end
-    if C then table.insert(attrs, A "Condition" (C)) end
-    return function(properties)
-        local K={}
-        for k,_ in pairs(properties) do table.insert(K, k) end
-        table.sort(K)
-        local C={}
-        for _,k in ipairs(K) do table.insert(C, Nt (k) (properties[k])) end
-        return N "PropertyGroup" (attrs) (C)
-    end
-end
-
-ImportGroup=function(L, C)
-    local attrs={}
-    if L then table.insert(attrs, A "Label" (L)) end
-    if C then table.insert(attrs, A "Condition" (C)) end
-    return N "ImportGroup" (attrs)
-end
-
-ItemDefinitionGroup=function(C)
-    local attrs={}
-    if C then table.insert(attrs, A "Condition" (C)) end
-    return N "ItemDefinitionGroup" (attrs)
-end
-
-Import=function(x, L, C)
-    local attrs={A "Project" (x)}
-    if L then table.insert(attrs, A "Label" (L)) end
-    if C then table.insert(attrs, A "Condition" (C)) end
-    return N "Import" (attrs) {}
-end
-
-ClCompile=function(x)               return N "ClCompile"            {A "Include" (x)} {}                            end
-None=function(x)                    return N "None"                 {A "Include" (x)} {}                            end
-CustomBuild=function(x)             return N "CustomBuild"          {A "Include" (x)}                               end
-ProjectConfiguration=function(x)    return N "ProjectConfiguration" {A "Include" (x)}                               end
-ProjectReference=function(x)        return N "ProjectReference"     {A "Include" (x)}                               end
-
-ItemGroup=function(L)
+local clcompile=function(x)               return N "ClCompile"            {A "Include" (x)} {}                            end
+local none=function(x)                    return N "None"                 {A "Include" (x)} {}                            end
+local custombuild=function(x)             return N "CustomBuild"          {A "Include" (x)}                               end
+local projectconfiguration=function(x)    return N "ProjectConfiguration" {A "Include" (x)}                               end
+local projectreference=function(x)        return N "ProjectReference"     {A "Include" (x)}                               end
+local itemgroup=function(L)
     local attrs={}
     if L then table.insert(attrs, A "Label" (L)) end
     return N "ItemGroup" (attrs)
@@ -85,7 +45,7 @@ end
 
 -- =====================================================
 
-local ItemDefinition=function(itemname)
+local mkitemdefinition=function(itemname)
     return function(settings)
         local K={}
         for k,_ in pairs(settings) do table.insert(K, k) end
@@ -96,63 +56,116 @@ local ItemDefinition=function(itemname)
     end
 end
 
-ItemDefinitions={
-    Compiler=ItemDefinition("ClCompile"),
-    Linker=ItemDefinition("Link")
-}
-
--- =====================================================
-
-local ItemGroup=function(itemfunction)
+local mkitemgroup=function(itemfunction)
     return function(files)
         local F={}
         for _,f in ipairs(files) do table.insert(F, itemfunction(f)) end
-        return ItemGroup() (F)
+        return itemgroup() (F)
     end
 end
 
-ItemGroups={
-    ClCompile=ItemGroup(ClCompile),
-    None=ItemGroup(None),
-    ProjectReference=function(projects)
-        -- projects={ filename=guid, ...}
-        local Files,G={},{}
-        for file,guid in pairs(projects) do Files[guid]=file; table.insert(G, guid) end
-        table.sort(G)
-        local P={}
-        for _,guid in ipairs(G) do
-            table.insert(P, ProjectReference(Files[guid]) {Nt "Project" (guid)})
+return {
+
+    Project=N "Project" {
+        A "DefaultTargets" "Build",
+        A "xmlns" "http://schemas.microsoft.com/developer/msbuild/2003"
+    },
+
+    PropertyGroup=function(L, C)
+        local attrs={}
+        if L then table.insert(attrs, A "Label" (L)) end
+        if C then table.insert(attrs, A "Condition" (C)) end
+        return function(properties)
+            local K={}
+            for k,_ in pairs(properties) do table.insert(K, k) end
+            table.sort(K)
+            local C={}
+            for _,k in ipairs(K) do table.insert(C, Nt (k) (properties[k])) end
+            return N "PropertyGroup" (attrs) (C)
         end
-        return Nt "ItemGroup" (P)
     end,
-    Custom=function(rule) return ItemGroup(rule) end,
+
+    ImportGroup=function(L, C)
+        local attrs={}
+        if L then table.insert(attrs, A "Label" (L)) end
+        if C then table.insert(attrs, A "Condition" (C)) end
+        return N "ImportGroup" (attrs)
+    end,
+
+    Import=function(x, L, C)
+        local attrs={A "Project" (x)}
+        if L then table.insert(attrs, A "Label" (L)) end
+        if C then table.insert(attrs, A "Condition" (C)) end
+        return N "Import" (attrs) {}
+    end,
+
+    ItemDefinitionGroup=function(C)
+        local attrs={}
+        if C then table.insert(attrs, A "Condition" (C)) end
+        return N "ItemDefinitionGroup" (attrs)
+    end,
+
+    make_config=function(c, p)
+        local cp=string.format("%s|%s", c, p)
+        local config=projectconfiguration (cp) {Nt "Configuration" (c), Nt "Platform" (p)}
+        return config, "'$(Configuration)|$(Platform)'=='"..cp.."'"
+    end,
+
+    ItemGroup=itemgroup,
+    ItemDefinitions={
+        Compiler=mkitemdefinition("ClCompile"),
+        Linker=mkitemdefinition("Link")
+    },
+    ItemGroups={
+        ClCompile=mkitemgroup(clcompile),
+        None=mkitemgroup(none),
+        ProjectReference=function(projects)
+            -- projects={ filename=guid, ...}
+            local Files,G={},{}
+            for file,guid in pairs(projects) do Files[guid]=file; table.insert(G, guid) end
+            table.sort(G)
+            local P={}
+            for _,guid in ipairs(G) do
+                table.insert(P, projectreference(Files[guid]) {Nt "Project" (guid)})
+            end
+            return Nt "ItemGroup" (P)
+        end,
+        Custom=function(rule)
+            return mkitemgroup(rule)
+        end,
+    },
+
+    ProjectConfiguration=projectconfiguration,
+    CustomBuild=function(file, command, outputs, message, filetype)
+        return N "CustomBuild" {A "Include" (file)} {
+            Nt "Command" (command),
+            Nt "Outputs" (outputs),
+            Nt "Message" (message or "Custom build "..file),
+            Nt "FileType" (filetype or "Document"),
+        }
+    end,
+
+    prepend={
+        define=function(defs)
+            if #defs>0 then
+                return table.concat(defs, ";")..";%(PreprocessorDefinitions)"
+            end
+        end,
+        inc=function(dirs)
+            if #dirs>0 then
+                return table.concat(dirs, ";")..";%(AdditionalIncludeDirectories)"
+            end
+        end,
+        depend=function(libs)
+            if #libs>0 then
+                return table.concat(libs, ";")..";%(AdditionalDependencies)"
+            end
+        end,
+        libdirs=function(dirs)
+            if #dirs>0 then
+                return table.concat(dirs, ";")..";%(AdditionalLibraryDirectories)"
+            end
+        end
+    }
+
 }
-
-prepend_define=function(defs)
-    if #defs>0 then
-        return table.concat(defs, ";")..";%(PreprocessorDefinitions)"
-    end
-end
-
-prepend_inc=function(dirs)
-    if #dirs>0 then
-        return table.concat(dirs, ";")..";%(AdditionalIncludeDirectories)"
-    end
-end
-
-prepend_depend=function(libs)
-    if #libs>0 then
-        return table.concat(libs, ";")..";%(AdditionalDependencies)"
-    end
-end
-
-prepend_libdirs=function(dirs)
-    if #dirs>0 then
-        return table.concat(dirs, ";")..";%(AdditionalLibraryDirectories)"
-    end
-end
-
-make_config=function(c, p)
-    local cp=string.format("%s|%s", c, p)
-    return cp, "'$(Configuration)|$(Platform)'=='"..cp.."'"
-end

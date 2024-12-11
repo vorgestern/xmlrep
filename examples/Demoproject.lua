@@ -3,42 +3,39 @@ local X=require "examples.vcxproj"
 
 local custombuildrules={
     deflatelua=function(filename)
-        local settings={
-            Nt "Command" "lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)",
-            Nt "Outputs" "$(IntDir)/%(Filename).cpp",
-            Nt "Message" "%(Filename)%(Extension) to $(IntDir)%(Filename).cpp",
-            Nt "FileType" "Document",
-        }
-        return CustomBuild(filename)(settings)
+        return X.CustomBuild(filename,
+            "lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)",
+            "$(IntDir)/%(Filename).cpp",
+            "%(Filename)%(Extension) to $(IntDir)%(Filename).cpp",
+            "Document"
+        )
     end
 }
 
-local R32,IfR32=make_config("Release", "Win32") -- "Release|Win32", "'$(Configuration)|$(Platform)'=='Release|Win32'"
+local R32,IfR32=X.make_config("Release", "Win32") -- "Release|Win32", "'$(Configuration)|$(Platform)'=='Release|Win32'"
 
-local K=Project {
-    ItemGroup "ProjectConfigurations" {
-        ProjectConfiguration (R32) {Nt "Configuration" "Release", Nt "Platform" "Win32"}
-    },
-    PropertyGroup ("Globals") {
+local K=X.Project {
+    X.ItemGroup "ProjectConfigurations" {R32},
+    X.PropertyGroup ("Globals") {
         ProjectGuid="{C4C00E76-B078-50C3-1980-291F0557EBB3}",
         IgnoreWarnCompileDuplicatedFilename="true",
         Keyword="Win32Proj",
         RootNamespace="LuaToXML54",
     },
-    Import "$(VCTargetsPath)/Microsoft.Cpp.Default.props",
-    PropertyGroup ("Configuration", IfR32) {
+    X.Import "$(VCTargetsPath)/Microsoft.Cpp.Default.props",
+    X.PropertyGroup ("Configuration", IfR32) {
         ConfigurationType="DynamicLibrary",
         UseDebugLibraries="false",
         CharacterSet="Unicode",
         PlatformToolset="v143",
     },
-    Import "$(VCTargetsPath)/Microsoft.Cpp.props",
-    ImportGroup ("ExtensionSettings") {},
-    ImportGroup ("PropertySheets", IfR32) {
-        Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "LocalAppDataPlatform", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')"),
+    X.Import "$(VCTargetsPath)/Microsoft.Cpp.props",
+    X.ImportGroup ("ExtensionSettings") {},
+    X.ImportGroup ("PropertySheets", IfR32) {
+        X.Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "LocalAppDataPlatform", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')"),
     },
-    PropertyGroup ("UserMacros") {},
-    PropertyGroup (nil, IfR32) {
+    X.PropertyGroup ("UserMacros") {},
+    X.PropertyGroup (nil, IfR32) {
         LinkIncremental="false",
         IgnoreImportLibrary="true",
         OutDir="$(ROBINSON)/lua/modules/",
@@ -46,48 +43,48 @@ local K=Project {
         TargetName="LuaToXML54",
         TargetExt=".dll",
     },
-    ItemDefinitionGroup (IfR32) {
-        ItemDefinitions.Compiler {
+    X.ItemDefinitionGroup (IfR32) {
+        X.ItemDefinitions.Compiler {
             PrecompiledHeader="NotUsing",
             WarningLevel="Level3",
-            PreprocessorDefinitions=prepend_define {"_CRT_SECURE_NO_WARNINGS", "ZLIB_CONST"},
-            AdditionalIncludeDirectories=prepend_inc {"../libs/include/zlib-1.2.11", "../libs/inflate", "$(ROBINSON)/lua/5.4/include", "obj/LuaToXML54"},
+            PreprocessorDefinitions=X.prepend.define {"_CRT_SECURE_NO_WARNINGS", "ZLIB_CONST"},
+            AdditionalIncludeDirectories=X.prepend.inc {"../libs/include/zlib-1.2.11", "../libs/inflate", "$(ROBINSON)/lua/5.4/include", "obj/LuaToXML54"},
             Optimization="Disabled",
             LanguageStandard="stdcpp20",
             ExternalWarningLevel="Level3"
         },
-        ItemDefinitions.Linker {
+        X.ItemDefinitions.Linker {
             SubSystem="Windows",
-            AdditionalDependencies=prepend_depend {"lua54-shared.lib"},
-            AdditionalLibraryDirectories=prepend_libdirs {"$(ROBINSON)/lua/lib"},
+            AdditionalDependencies=X.prepend.depend {"lua54-shared.lib"},
+            AdditionalLibraryDirectories=X.prepend.libdirs {"$(ROBINSON)/lua/lib"},
             ImportLibrary="obj/LuaToXML54/LuaToXML54.lib",
             ModuleDefinitionFile="../lua/DLLModule/LuaToXML/LuaToXML.def",
             ProgramDatabaseFile="obj/LuaToXML54/LuaToXML54.pdb",
         }
     },
-    ItemGroups.ClCompile {
+    X.ItemGroups.ClCompile {
         "../lua/DLLModule/LuaToXML/DllMain.cpp",
         "../lua/DLLModule/LuaToXML/Modul.cpp",
         "obj/LuaToXML54/Attribute.cpp",
         "obj/LuaToXML54/Node.cpp",
         "obj/LuaToXML54/TextNode.cpp",
     },
-    ItemGroups.None {
+    X.ItemGroups.None {
         "../lua/DLLModule/LuaToXML/LuaToXML.def",
         "../lua/DLLModule/LuaToXML/init.lua",
         "../lua/DLLModule/LuaToXML/xmldemo.lua",
     },
-    ItemGroups.Custom (custombuildrules.deflatelua) {
+    X.ItemGroups.Custom (custombuildrules.deflatelua) {
         "../lua/DLLModule/LuaToXML/Attribute.lua",
         "../lua/DLLModule/LuaToXML/Node.lua",
         "../lua/DLLModule/LuaToXML/TextNode.lua",
     },
-    ItemGroups.ProjectReference {
+    X.ItemGroups.ProjectReference {
         ["zlibstat32.vcxproj"]="{57C7ADBA-437F-EF07-AC86-C863985D8AF8}",
         ["inflate32.vcxproj"]="{CD4E2EEC-39B9-E262-82F7-9308EEA0C0B7}",
     },
-    Import "$(VCTargetsPath)/Microsoft.Cpp.targets",
-    ImportGroup ("ExtensionTargets") {},
+    X.Import "$(VCTargetsPath)/Microsoft.Cpp.targets",
+    X.ImportGroup ("ExtensionTargets") {},
 }
 
 print(K)
