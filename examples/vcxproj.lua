@@ -109,5 +109,16 @@ end
 ItemGroups={
     ClCompile=ItemGroup(ClCompile),
     None=ItemGroup(None),
+    ProjectReference=function(projects)
+        -- projects={ filename=guid, ...}
+        local Files,G={},{}
+        for file,guid in pairs(projects) do Files[guid]=file; table.insert(G, guid) end
+        table.sort(G)
+        local P={}
+        for _,guid in ipairs(G) do
+            table.insert(P, ProjectReference(Files[guid]) {Nt "Project" (guid)})
+        end
+        return Nt "ItemGroup" (P)
+    end,
     Custom=function(rule) return ItemGroup(rule) end,
 }

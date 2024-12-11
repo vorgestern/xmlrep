@@ -80,9 +80,9 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
         "../lua/DLLModule/LuaToXML/Node.lua",
         "../lua/DLLModule/LuaToXML/TextNode.lua",
     },
-    ItemGroup() {
-        ProjectReference "zlibstat32.vcxproj" {Nt "Project" "{57C7ADBA-437F-EF07-AC86-C863985D8AF8}"},
-        ProjectReference "inflate32.vcxproj"  {Nt "Project" "{CD4E2EEC-39B9-E262-82F7-9308EEA0C0B7}"},
+    ItemGroups.ProjectReference {
+        ["zlibstat32.vcxproj"]="{57C7ADBA-437F-EF07-AC86-C863985D8AF8}",
+        ["inflate32.vcxproj"]="{CD4E2EEC-39B9-E262-82F7-9308EEA0C0B7}",
     },
     Import "$(VCTargetsPath)/Microsoft.Cpp.targets",
     ImportGroup ("ExtensionTargets") {},
