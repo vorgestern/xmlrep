@@ -36,23 +36,20 @@ PropertyGroup=function(L, C)
     local attrs={}
     if L then table.insert(attrs, A "Label" (L)) end
     if C then table.insert(attrs, A "Condition" (C)) end
-    local Node=N "PropertyGroup" (attrs) {}
-    return function(children) Node:appendchildren(children); return Node end
+    return N "PropertyGroup" (attrs)
 end
 
 ImportGroup=function(L, C)
     local attrs={}
     if L then table.insert(attrs, A "Label" (L)) end
     if C then table.insert(attrs, A "Condition" (C)) end
-    local Node=N "ImportGroup" (attrs) {}
-    return function(children) Node:appendchildren(children); return Node end
+    return N "ImportGroup" (attrs)
 end
 
 ItemDefinitionGroup=function(C)
     local attrs={}
     if C then table.insert(attrs, A "Condition" (C)) end
-    local Node=N "ItemDefinitionGroup" (attrs) {}
-    return function(children) Node:appendchildren(children); return Node end
+    return N "ItemDefinitionGroup" (attrs)
 end
 
 Import=function(x, L, C)
