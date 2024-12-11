@@ -51,37 +51,22 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
             Nt "ProgramDatabaseFile" "obj/LuaToXML54/.pdb",
         }
     },
-    ItemGroup() {
-        ClCompile "../lua/DLLModule/LuaToXML/DllMain.cpp",
-        ClCompile "../lua/DLLModule/LuaToXML/Modul.cpp",
-        ClCompile "obj/LuaToXML54/Attribute.cpp",
-        ClCompile "obj/LuaToXML54/Node.cpp",
-        ClCompile "obj/LuaToXML54/TextNode.cpp",
+    ItemGroups.ClCompile {
+        "../lua/DLLModule/LuaToXML/DllMain.cpp",
+        "../lua/DLLModule/LuaToXML/Modul.cpp",
+        "obj/LuaToXML54/Attribute.cpp",
+        "obj/LuaToXML54/Node.cpp",
+        "obj/LuaToXML54/TextNode.cpp",
+    },
+    ItemGroups.None {
+        "../lua/DLLModule/LuaToXML/LuaToXML.def",
+        "../lua/DLLModule/LuaToXML/init.lua",
+        "../lua/DLLModule/LuaToXML/xmldemo.lua",
     },
     ItemGroup() {
-        None "../lua/DLLModule/LuaToXML/LuaToXML.def",
-        None "../lua/DLLModule/LuaToXML/init.lua",
-        None "../lua/DLLModule/LuaToXML/xmldemo.lua",
-    },
-    ItemGroup() {
-        CustomBuild "../lua/DLLModule/LuaToXML/Attribute.lua" {
-            Nt "FileType" "Document",
-            Nt "Command" "lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)",
-            Nt "Outputs" "obj/LuaToXML54/Attribute.cpp",
-            Nt "Message" "%(Filename)%(Extension) to $(IntDir)%(Filename).cpp"
-        },
-        CustomBuild "../lua/DLLModule/LuaToXML/Node.lua" {
-            Nt "FileType" "Document",
-            Nt "Command" "lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)",
-            Nt "Outputs" "obj/LuaToXML54/Node.cpp",
-            Nt "Message" "%(Filename)%(Extension) to $(IntDir)%(Filename).cpp",
-        },
-        CustomBuild "../lua/DLLModule/LuaToXML/TextNode.lua" {
-            Nt "FileType" "Document",
-            Nt "Command" "lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)",
-            Nt "Outputs" "obj/LuaToXML54/TextNode.cpp",
-            Nt "Message" "%(Filename)%(Extension) to $(IntDir)%(Filename).cpp",
-        },
+        Items.custombuildrules.deflatelua "../lua/DLLModule/LuaToXML/Attribute.lua",
+        Items.custombuildrules.deflatelua "../lua/DLLModule/LuaToXML/Node.lua",
+        Items.custombuildrules.deflatelua "../lua/DLLModule/LuaToXML/TextNode.lua",
     },
     ItemGroup() {
         ProjectReference "zlibstat32.vcxproj" {Nt "Project" "{57C7ADBA-437F-EF07-AC86-C863985D8AF8}"},

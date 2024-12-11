@@ -12,7 +12,7 @@
         <RootNamespace>LuaToXML54</RootNamespace>
     </PropertyGroup>
     <Import Project="$(VCTargetsPath)/Microsoft.Cpp.Default.props"/>
-    <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
         <ConfigurationType>DynamicLibrary</ConfigurationType>
         <UseDebugLibraries>false</UseDebugLibraries>
         <CharacterSet>Unicode</CharacterSet>
@@ -20,8 +20,8 @@
     </PropertyGroup>
     <Import Project="$(VCTargetsPath)/Microsoft.Cpp.props"/>
     <ImportGroup Label="ExtensionSettings"/>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <Import Project="$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props" Label="LocalAppDataPlatform" Condition="exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')"/>
+    <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+        <Import Project="$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
     <PropertyGroup Label="UserMacros"/>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -65,22 +65,22 @@
     </ItemGroup>
     <ItemGroup>
         <CustomBuild Include="../lua/DLLModule/LuaToXML/Attribute.lua">
-            <FileType>Document</FileType>
             <Command>lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)</Command>
-            <Outputs>obj/LuaToXML54/Attribute.cpp</Outputs>
+            <Outputs>$(IntDir)/%(Filename).cpp</Outputs>
             <Message>%(Filename)%(Extension) to $(IntDir)%(Filename).cpp</Message>
+            <FileType>Document</FileType>
         </CustomBuild>
         <CustomBuild Include="../lua/DLLModule/LuaToXML/Node.lua">
-            <FileType>Document</FileType>
             <Command>lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)</Command>
-            <Outputs>obj/LuaToXML54/Node.cpp</Outputs>
+            <Outputs>$(IntDir)/%(Filename).cpp</Outputs>
             <Message>%(Filename)%(Extension) to $(IntDir)%(Filename).cpp</Message>
+            <FileType>Document</FileType>
         </CustomBuild>
         <CustomBuild Include="../lua/DLLModule/LuaToXML/TextNode.lua">
-            <FileType>Document</FileType>
             <Command>lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)</Command>
-            <Outputs>obj/LuaToXML54/TextNode.cpp</Outputs>
+            <Outputs>$(IntDir)/%(Filename).cpp</Outputs>
             <Message>%(Filename)%(Extension) to $(IntDir)%(Filename).cpp</Message>
+            <FileType>Document</FileType>
         </CustomBuild>
     </ItemGroup>
     <ItemGroup>
