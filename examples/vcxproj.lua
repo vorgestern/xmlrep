@@ -41,6 +41,22 @@ ItemGroup=function(L)
     return N "ItemGroup" (attrs)
 end
 
+local ItemDefinition=function(itemname)
+    return function(settings)
+        local K={}
+        for k,_ in pairs(settings) do table.insert(K, k) end
+        table.sort(K)
+        local S={}
+        for _,k in ipairs(K) do table.insert(S, Nt(k)(tostring(settings[k]))) end
+        return N (itemname) {} (S)
+    end
+end
+
+ItemDefinitions={
+    Compiler=ItemDefinition("ClCompile"),
+    Linker=ItemDefinition("Link")
+}
+
 Items={
     custombuild=function(filename)
         return function(settings)
@@ -52,28 +68,18 @@ Items={
             return CustomBuild(filename)(S)
         end
     end,
-    custombuildrules={
-        deflatelua=function(filename)
-            local settings={
-                Nt "Command" "lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)",
-                Nt "Outputs" "$(IntDir)/%(Filename).cpp",
-                Nt "Message" "%(Filename)%(Extension) to $(IntDir)%(Filename).cpp",
-                Nt "FileType" "Document",
-            }
-            return CustomBuild(filename)(settings)
-        end
-    }
 }
 
-ItemGroups={
-    ClCompile=function(files)
+local ItemGroup=function(itemfunction)
+    return function(files)
         local F={}
-        for _,f in ipairs(files) do table.insert(F, ClCompile(f)) end
-        return ItemGroup() (F)
-    end,
-    None=function(files)
-        local F={}
-        for _,f in ipairs(files) do table.insert(F, None(f)) end
+        for _,f in ipairs(files) do table.insert(F, itemfunction(f)) end
         return ItemGroup() (F)
     end
+end
+
+ItemGroups={
+    ClCompile=ItemGroup(ClCompile),
+    None=ItemGroup(None),
+    Custom=function(rule) return ItemGroup(rule) end,
 }

@@ -1,6 +1,18 @@
 ﻿
 local X=require "examples.vcxproj"
 
+local custombuildrules={
+    deflatelua=function(filename)
+        local settings={
+            Nt "Command" "lua ../lua/DLLModule/LuaToXML/deflatemodule.lua $(IntDir)/%(Filename).cpp %(Identity)",
+            Nt "Outputs" "$(IntDir)/%(Filename).cpp",
+            Nt "Message" "%(Filename)%(Extension) to $(IntDir)%(Filename).cpp",
+            Nt "FileType" "Document",
+        }
+        return CustomBuild(filename)(settings)
+    end
+}
+
 local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com/developer/msbuild/2003"} {
     ItemGroup "ProjectConfigurations" {
         ProjectConfiguration "Release|Win32" {Nt "Configuration" "Release", Nt "Platform" "Win32"}
@@ -33,22 +45,22 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
         Nt "TargetExt" ".dll",
     },
     ItemDefinitionGroup "'$(Configuration)|$(Platform)'=='Release|Win32'" {
-        N "ClCompile" {} {
-            Nt "PrecompiledHeader" "NotUsing",
-            Nt "WarningLevel" "Level3",
-            Nt "PreprocessorDefinitions" "_CRT_SECURE_NO_WARNINGS;ZLIB_CONST;%(PreprocessorDefinitions)",
-            Nt "AdditionalIncludeDirectories" "../libs/include/zlib-1.2.11;../libs/inflate;$(ROBINSON)/lua/5.4/include;obj/LuaToXML54;%(AdditionalIncludeDirectories)",
-            Nt "Optimization" "Disabled",
-            Nt "LanguageStandard" "stdcpp20",
-            Nt "ExternalWarningLevel" "Level3"
+        ItemDefinitions.Compiler {
+            PrecompiledHeader="NotUsing",
+            WarningLevel="Level3",
+            PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;ZLIB_CONST;%(PreprocessorDefinitions)",
+            AdditionalIncludeDirectories="../libs/include/zlib-1.2.11;../libs/inflate;$(ROBINSON)/lua/5.4/include;obj/LuaToXML54;%(AdditionalIncludeDirectories)",
+            Optimization="Disabled",
+            LanguageStandard="stdcpp20",
+            ExternalWarningLevel="Level3"
         },
-        N "Link" {} {
-            Nt "SubSystem" "Windows",
-            Nt "AdditionalDependencies" "lua54-shared.lib;%(AdditionalDependencies)",
-            Nt "AdditionalLibraryDirectories" "$(ROBINSON)/lua/lib;%(AdditionalLibraryDirectories)",
-            Nt "ImportLibrary" "obj/LuaToXML54/LuaToXML54.lib",
-            Nt "ModuleDefinitionFile" "../lua/DLLModule/LuaToXML/LuaToXML.def",
-            Nt "ProgramDatabaseFile" "obj/LuaToXML54/.pdb",
+        ItemDefinitions.Linker {
+            SubSystem="Windows",
+            AdditionalDependencies="lua54-shared.lib;%(AdditionalDependencies)",
+            AdditionalLibraryDirectories="$(ROBINSON)/lua/lib;%(AdditionalLibraryDirectories)",
+            ImportLibrary="obj/LuaToXML54/LuaToXML54.lib",
+            ModuleDefinitionFile="../lua/DLLModule/LuaToXML/LuaToXML.def",
+            ProgramDatabaseFile="obj/LuaToXML54/.pdb",
         }
     },
     ItemGroups.ClCompile {
@@ -63,10 +75,10 @@ local K=N "Project" {"DefaultTargets=Build", "xmlns=http://schemas.microsoft.com
         "../lua/DLLModule/LuaToXML/init.lua",
         "../lua/DLLModule/LuaToXML/xmldemo.lua",
     },
-    ItemGroup() {
-        Items.custombuildrules.deflatelua "../lua/DLLModule/LuaToXML/Attribute.lua",
-        Items.custombuildrules.deflatelua "../lua/DLLModule/LuaToXML/Node.lua",
-        Items.custombuildrules.deflatelua "../lua/DLLModule/LuaToXML/TextNode.lua",
+    ItemGroups.Custom (custombuildrules.deflatelua) {
+        "../lua/DLLModule/LuaToXML/Attribute.lua",
+        "../lua/DLLModule/LuaToXML/Node.lua",
+        "../lua/DLLModule/LuaToXML/TextNode.lua",
     },
     ItemGroup() {
         ProjectReference "zlibstat32.vcxproj" {Nt "Project" "{57C7ADBA-437F-EF07-AC86-C863985D8AF8}"},

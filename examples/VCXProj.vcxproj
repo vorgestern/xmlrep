@@ -34,21 +34,21 @@
     </PropertyGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <ClCompile>
-            <PrecompiledHeader>NotUsing</PrecompiledHeader>
-            <WarningLevel>Level3</WarningLevel>
-            <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ZLIB_CONST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
             <AdditionalIncludeDirectories>../libs/include/zlib-1.2.11;../libs/inflate;$(ROBINSON)/lua/5.4/include;obj/LuaToXML54;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-            <Optimization>Disabled</Optimization>
-            <LanguageStandard>stdcpp20</LanguageStandard>
             <ExternalWarningLevel>Level3</ExternalWarningLevel>
+            <LanguageStandard>stdcpp20</LanguageStandard>
+            <Optimization>Disabled</Optimization>
+            <PrecompiledHeader>NotUsing</PrecompiledHeader>
+            <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ZLIB_CONST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <WarningLevel>Level3</WarningLevel>
         </ClCompile>
         <Link>
-            <SubSystem>Windows</SubSystem>
             <AdditionalDependencies>lua54-shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
             <AdditionalLibraryDirectories>$(ROBINSON)/lua/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
             <ImportLibrary>obj/LuaToXML54/LuaToXML54.lib</ImportLibrary>
             <ModuleDefinitionFile>../lua/DLLModule/LuaToXML/LuaToXML.def</ModuleDefinitionFile>
             <ProgramDatabaseFile>obj/LuaToXML54/.pdb</ProgramDatabaseFile>
+            <SubSystem>Windows</SubSystem>
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
