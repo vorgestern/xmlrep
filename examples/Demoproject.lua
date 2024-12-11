@@ -13,11 +13,11 @@ local custombuildrules={
     end
 }
 
-local R32="'$(Configuration)|$(Platform)'=='Release|Win32'"
+local R32,IfR32=make_config("Release", "Win32") -- "Release|Win32", "'$(Configuration)|$(Platform)'=='Release|Win32'"
 
 local K=Project {
     ItemGroup "ProjectConfigurations" {
-        ProjectConfiguration "Release|Win32" {Nt "Configuration" "Release", Nt "Platform" "Win32"}
+        ProjectConfiguration (R32) {Nt "Configuration" "Release", Nt "Platform" "Win32"}
     },
     PropertyGroup ("Globals") {
         ProjectGuid="{C4C00E76-B078-50C3-1980-291F0557EBB3}",
@@ -26,7 +26,7 @@ local K=Project {
         RootNamespace="LuaToXML54",
     },
     Import "$(VCTargetsPath)/Microsoft.Cpp.Default.props",
-    PropertyGroup ("Configuration", R32) {
+    PropertyGroup ("Configuration", IfR32) {
         ConfigurationType="DynamicLibrary",
         UseDebugLibraries="false",
         CharacterSet="Unicode",
@@ -34,11 +34,11 @@ local K=Project {
     },
     Import "$(VCTargetsPath)/Microsoft.Cpp.props",
     ImportGroup ("ExtensionSettings") {},
-    ImportGroup ("PropertySheets", R32) {
+    ImportGroup ("PropertySheets", IfR32) {
         Import ("$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props", "LocalAppDataPlatform", "exists('$(UserRootDir)/Microsoft.Cpp.$(Platform).user.props')"),
     },
     PropertyGroup ("UserMacros") {},
-    PropertyGroup (nil, R32) {
+    PropertyGroup (nil, IfR32) {
         LinkIncremental="false",
         IgnoreImportLibrary="true",
         OutDir="$(ROBINSON)/lua/modules/",
@@ -46,7 +46,7 @@ local K=Project {
         TargetName="LuaToXML54",
         TargetExt=".dll",
     },
-    ItemDefinitionGroup (R32) {
+    ItemDefinitionGroup (IfR32) {
         ItemDefinitions.Compiler {
             PrecompiledHeader="NotUsing",
             WarningLevel="Level3",
@@ -62,7 +62,7 @@ local K=Project {
             AdditionalLibraryDirectories=prepend_libdirs {"$(ROBINSON)/lua/lib"},
             ImportLibrary="obj/LuaToXML54/LuaToXML54.lib",
             ModuleDefinitionFile="../lua/DLLModule/LuaToXML/LuaToXML.def",
-            ProgramDatabaseFile="obj/LuaToXML54/.pdb",
+            ProgramDatabaseFile="obj/LuaToXML54/LuaToXML54.pdb",
         }
     },
     ItemGroups.ClCompile {

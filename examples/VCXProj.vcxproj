@@ -47,7 +47,7 @@
             <AdditionalLibraryDirectories>$(ROBINSON)/lua/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
             <ImportLibrary>obj/LuaToXML54/LuaToXML54.lib</ImportLibrary>
             <ModuleDefinitionFile>../lua/DLLModule/LuaToXML/LuaToXML.def</ModuleDefinitionFile>
-            <ProgramDatabaseFile>obj/LuaToXML54/.pdb</ProgramDatabaseFile>
+            <ProgramDatabaseFile>obj/LuaToXML54/LuaToXML54.pdb</ProgramDatabaseFile>
             <SubSystem>Windows</SubSystem>
         </Link>
     </ItemDefinitionGroup>

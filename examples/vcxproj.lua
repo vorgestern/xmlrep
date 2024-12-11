@@ -151,3 +151,8 @@ prepend_libdirs=function(dirs)
         return table.concat(dirs, ";")..";%(AdditionalLibraryDirectories)"
     end
 end
+
+make_config=function(c, p)
+    local cp=string.format("%s|%s", c, p)
+    return cp, "'$(Configuration)|$(Platform)'=='"..cp.."'"
+end
