@@ -36,7 +36,14 @@ PropertyGroup=function(L, C)
     local attrs={}
     if L then table.insert(attrs, A "Label" (L)) end
     if C then table.insert(attrs, A "Condition" (C)) end
-    return N "PropertyGroup" (attrs)
+    return function(properties)
+        local K={}
+        for k,_ in pairs(properties) do table.insert(K, k) end
+        table.sort(K)
+        local C={}
+        for _,k in ipairs(K) do table.insert(C, Nt (k) (properties[k])) end
+        return N "PropertyGroup" (attrs) (C)
+    end
 end
 
 ImportGroup=function(L, C)

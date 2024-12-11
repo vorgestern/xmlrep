@@ -6,17 +6,17 @@
         </ProjectConfiguration>
     </ItemGroup>
     <PropertyGroup Label="Globals">
-        <ProjectGuid>{C4C00E76-B078-50C3-1980-291F0557EBB3}</ProjectGuid>
         <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
         <Keyword>Win32Proj</Keyword>
+        <ProjectGuid>{C4C00E76-B078-50C3-1980-291F0557EBB3}</ProjectGuid>
         <RootNamespace>LuaToXML54</RootNamespace>
     </PropertyGroup>
     <Import Project="$(VCTargetsPath)/Microsoft.Cpp.Default.props"/>
     <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <ConfigurationType>DynamicLibrary</ConfigurationType>
-        <UseDebugLibraries>false</UseDebugLibraries>
         <CharacterSet>Unicode</CharacterSet>
+        <ConfigurationType>DynamicLibrary</ConfigurationType>
         <PlatformToolset>v143</PlatformToolset>
+        <UseDebugLibraries>false</UseDebugLibraries>
     </PropertyGroup>
     <Import Project="$(VCTargetsPath)/Microsoft.Cpp.props"/>
     <ImportGroup Label="ExtensionSettings"/>
@@ -25,12 +25,12 @@
     </ImportGroup>
     <PropertyGroup Label="UserMacros"/>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <LinkIncremental>false</LinkIncremental>
         <IgnoreImportLibrary>true</IgnoreImportLibrary>
-        <OutDir>$(ROBINSON)/lua/modules/</OutDir>
         <IntDir>obj/LuaToXML54/</IntDir>
-        <TargetName>LuaToXML54</TargetName>
+        <LinkIncremental>false</LinkIncremental>
+        <OutDir>$(ROBINSON)/lua/modules/</OutDir>
         <TargetExt>.dll</TargetExt>
+        <TargetName>LuaToXML54</TargetName>
     </PropertyGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <ClCompile>
