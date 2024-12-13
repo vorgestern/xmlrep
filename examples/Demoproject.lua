@@ -47,8 +47,16 @@ local K=X.Project {
         X.ItemDefinitions.Compiler {
             PrecompiledHeader="NotUsing",
             WarningLevel="Level3",
-            PreprocessorDefinitions=X.prepend.define {"_CRT_SECURE_NO_WARNINGS", "ZLIB_CONST"},
-            AdditionalIncludeDirectories=X.prepend.inc {"../libs/include/zlib-1.2.11", "../libs/inflate", "$(ROBINSON)/lua/5.4/include", "obj/LuaToXML54"},
+            PreprocessorDefinitions=X.prepend.define {
+                "_CRT_SECURE_NO_WARNINGS",
+                "ZLIB_CONST"
+            },
+            AdditionalIncludeDirectories=X.prepend.inc {
+                "../libs/include/zlib-1.2.11",
+                "../libs/inflate",
+                "$(ROBINSON)/lua/5.4/include",
+                "obj/LuaToXML54"
+            },
             Optimization="Disabled",
             LanguageStandard="stdcpp20",
             ExternalWarningLevel="Level3"
@@ -87,4 +95,4 @@ local K=X.Project {
     X.ImportGroup ("ExtensionTargets") {},
 }
 
-print(K)
+io.output "examples/Demoproject.vcxproj" :write(tostring(K), "\n")

@@ -1,5 +1,3 @@
-
-=================
 <Readme version="0.1">
     <Chapter title="Purpose">Export structured data from Lua in xml-form</Chapter>
     <Chapter title="Info">
@@ -28,4 +26,3 @@ since it can be used in source-form.</Chapter>
 Consult LUA_PATH_5_4 or LUA_PATH environment variables
 or https://www.lua.org/manual/5.4/manual.html#pdf-package.path</Chapter>
 </Readme>
-=================

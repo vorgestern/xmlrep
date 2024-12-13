@@ -36,4 +36,4 @@ Consult LUA_PATH_5_4 or LUA_PATH environment variables
 or https://www.lua.org/manual/5.4/manual.html#pdf-package.path]],
 }
 
-print("\n=================\n"..tostring(K).."\n=================")
+io.output "examples/Readme.xml" :write(tostring(K))
