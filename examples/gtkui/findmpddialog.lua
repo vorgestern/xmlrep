@@ -1,49 +1,49 @@
 
-X=require "examples.gtkui"
+local X=require "examples.gtkui" :makeglobal()
 
 -- https://github.com/nullobsi/cantata/blob/main/gui/findmpddialog.ui
 
-local K=X.ui {
-    X.class "FindMpdDialog",
-    X.widget("QDialog", "FindMpdDialog") {
-        X.rectproperty("geometry", 0,0,478,310),
-        X.sizeproperty("minimumSize", 0,0),
-        X.stringproperty("windowTitle", "Server Detection"),
-        X.layout ("QVBoxLayout", "verticalLayout") {
-            X.item() {
-                X.widget("QLabel", "label") {
-                    X.stringproperty("text", "Please select your MPD. If you don't see your MPD listed here, check that zeroconf is activated in your MPD configuration or insert the host configuration manually."),
-                    X.setproperty("alignment", "Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop"),
-                    X.boolproperty("wordWrap", true),
-                    X.setproperty("textInteractionFlags", "Qt::TextSelectableByMouse")
+local K=ui {
+    class "FindMpdDialog",
+    widget("QDialog", "FindMpdDialog") {
+        rectproperty("geometry", 0,0,478,310),
+        sizeproperty("minimumSize", 0,0),
+        stringproperty("windowTitle", "Server Detection"),
+        layout ("QVBoxLayout", "verticalLayout") {
+            item() {
+                widget("QLabel", "label") {
+                    stringproperty("text", "Please select your MPD. If you don't see your MPD listed here, check that zeroconf is activated in your MPD configuration or insert the host configuration manually."),
+                    setproperty("alignment", "Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop"),
+                    boolproperty("wordWrap", true),
+                    setproperty("textInteractionFlags", "Qt::TextSelectableByMouse")
                 }
             },
-            X.item() {
-                X.widget("QTableWidget", "tableWidget") {
-                    X.setproperty("editTriggers", "QAbstractItemView::NoEditTriggers"),
-                    X.enumproperty("selectionMode", "QAbstractItemView::SingleSelection"),
-                    X.enumproperty("selectionBehavior", "QAbstractItemView::SelectRows"),
-                    X.boolproperty("showGrid", true),
-                    X.boolproperty("sortingEnabled", true),
-                    X.boolattribute("horizontalHeaderStretchLastSection", true),
-                    X.boolattribute("verticalHeaderVisible", false)
+            item() {
+                widget("QTableWidget", "tableWidget") {
+                    setproperty("editTriggers", "QAbstractItemView::NoEditTriggers"),
+                    enumproperty("selectionMode", "QAbstractItemView::SingleSelection"),
+                    enumproperty("selectionBehavior", "QAbstractItemView::SelectRows"),
+                    boolproperty("showGrid", true),
+                    boolproperty("sortingEnabled", true),
+                    boolattribute("horizontalHeaderStretchLastSection", true),
+                    boolattribute("verticalHeaderVisible", false)
                 }
             },
-            X.item() {
-                X.widget("QDialogButtonBox", "buttonBox") {
-                    X.enumproperty("orientation", "Qt::Horizontal"),
-                    X.setproperty("standardButtons", "QDialogButtonBox::Cancel|QDialogButtonBox::Ok")
+            item() {
+                widget("QDialogButtonBox", "buttonBox") {
+                    enumproperty("orientation", "Qt::Horizontal"),
+                    setproperty("standardButtons", "QDialogButtonBox::Cancel|QDialogButtonBox::Ok")
                 }
             }
         },
     },
-    X.resources {},
-    X.connections {
-        X.acceptedconnection("buttonBox", "FindMpdDialog") {
-            X.hints {X.xyhint("sourcelabel", 248, 254), X.xyhint("destinationlabel", 157, 274)}
+    resources {},
+    connections {
+        acceptedconnection("buttonBox", "FindMpdDialog") {
+            hints {xyhint("sourcelabel", 248, 254), xyhint("destinationlabel", 157, 274)}
         },
-        X.rejectedconnection("buttonBox", "FindMpdDialog") {
-            X.hints {X.xyhint("sourcelabel", 316, 260), X.xyhint("destinationlabel", 286, 274)}
+        rejectedconnection("buttonBox", "FindMpdDialog") {
+            hints {xyhint("sourcelabel", 316, 260), xyhint("destinationlabel", 286, 274)}
         }
     }
 }
