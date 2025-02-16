@@ -1,7 +1,10 @@
 
-require "examples.gtkui" :makeglobal()
+--[[
+        This example uses xmlrep.qtui to generate a Qt resource file.
+        Original: https://github.com/nullobsi/cantata/blob/main/gui/coverdialog.ui
+--]]
 
--- https://github.com/nullobsi/cantata/blob/main/gui/coverdialog.ui
+require "xmlrep.qtui" :makeglobal()
 
 local K=ui {
     class "CoverDialog",
@@ -39,4 +42,7 @@ local K=ui {
     }
 }
 
-print(tostring(K))
+local outfile=...
+if outfile then io.output(outfile):write(tostring(K), "\n")
+else                               print(tostring(K))
+end

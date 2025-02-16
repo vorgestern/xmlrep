@@ -1,4 +1,6 @@
 
-alias ex="lua examples/VCXProj.lua > examples/VCXProj.vcxproj\
-    && lua examples/Readme.lua > examples/Readme.xml\
-    && lua examples/Mindmap.lua"
+alias ex="lua examples/Demoproject.lua examples/Demoproject.vcxproj\
+    && lua examples/Readme.lua examples/Readme.xml\
+    && lua examples/Mindmap.lua examples/Mindmap_generated.mm\
+    && lua examples/qtui/coverdialog.lua examples/qtui/coderdialog.xml\
+    && lua examples/qtui/findmpddialog.lua examples/qtui/findmpddialog.xml"

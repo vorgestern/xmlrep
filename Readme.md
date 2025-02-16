@@ -45,8 +45,8 @@ Works as intended
     lua examples/Readme.lua                 .. with roughly the same content as this Readme.
     lua examples/Demoproject.lua            .. of a project file for Visual Studio (.vcxproj).
     lua examples/Mindmap.lua                .. of a mindmap for Freeplane (https://github.com/freeplane/freeplane)
-    lua examples/gtkui/coverdialog.lua      .. of a resource-file for a gtk-application
-    lua examples/gtkui/findmpddialog.lua    .. of a resource-file for a gtk-application
+    lua examples/qtui/coverdialog.lua       .. of a resource-file for a Qt-application
+    lua examples/qtui/findmpddialog.lua     .. of a resource-file for a Qt-application
 
 ## How to build
 There is no need to build xmlrep,

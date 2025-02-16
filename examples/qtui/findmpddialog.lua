@@ -1,7 +1,11 @@
 
-local X=require "examples.gtkui" :makeglobal()
+--[[
+        This example uses xmlrep.qtui to generate a Qt resource file.
+        Original: https://github.com/nullobsi/cantata/blob/main/gui/findmpddialog.ui
+--]]
 
--- https://github.com/nullobsi/cantata/blob/main/gui/findmpddialog.ui
+local X=require "xmlrep.qtui" :makeglobal()
+
 
 local K=ui {
     class "FindMpdDialog",
@@ -48,5 +52,9 @@ local K=ui {
     }
 }
 
-print [[<?xml version="1.0" encoding="UTF-8"?>]]
-print(tostring(K))
+local result=[[<?xml version="1.0" encoding="UTF-8"?>]] .. tostring(K)
+
+local outfile=...
+if outfile then io.output(outfile):write(result, "\n")
+else                               print(result)
+end

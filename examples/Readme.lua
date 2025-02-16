@@ -1,4 +1,8 @@
 
+--[[
+        This is an example to write a generic xml-file.
+--]]
+
 local X=require "xmlrep"
 local N,A,T=X.N,X.A,X.T  -- Node, Attribute, Textnode (Attributes and Textnodes can be created implicitly.)
 
@@ -36,4 +40,8 @@ Consult LUA_PATH_5_4 or LUA_PATH environment variables
 or https://www.lua.org/manual/5.4/manual.html#pdf-package.path]],
 }
 
-io.output "examples/Readme.xml" :write(tostring(K))
+-- "examples/Readme.xml"
+local outfile=...
+if outfile then io.output(outfile):write(tostring(K), "\n")
+else                               print(tostring(K))
+end

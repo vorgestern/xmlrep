@@ -1,5 +1,5 @@
 ﻿
-local X=require "examples.vcxproj"
+local X=require "xmlrep.vcxproj"
 
 local custombuildrules={
     deflatelua=function(filename)
@@ -95,4 +95,8 @@ local K=X.Project {
     X.ImportGroup ("ExtensionTargets") {},
 }
 
-io.output "examples/Demoproject.vcxproj" :write(tostring(K), "\n")
+-- "examples/Demoproject.vcxproj"
+local outfile=...
+if outfile then io.output(outfile):write(tostring(K), "\n")
+else                               print(tostring(K))
+end
